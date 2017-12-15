@@ -9,9 +9,19 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
+<script type="text/javascript">
+function myfunction(){alert("Product Added to Cart !");}
+</script>
+
 </head>
 <body style="background-color: #c0392b">
 <center>
+<%
+if(request.getAttribute("flag").equals("T")){ %>
+<h1 style="color: white;"> Product Added to Cart !</h1>
+<%}
+%> 
+<hr>
 <div style="position: static;overflow: auto">
 <div style="background-color: #FFEB3B;position: relative;float: left;">
 
@@ -24,6 +34,7 @@
 		<input type="image" style="height: 100;width: 200px" src="images/checkout.png">
 	</form>
 </div>
+
 </div>
 <%
 
@@ -55,13 +66,21 @@ for(Product prod:arr)
 <td><b>Price: </b></td><td> <i><%=prod.getUnitPrice()%></i></td>
 </tr>
 <tr>
+<td><b>Description:</b></td><td> <i><%=prod.getDescription()%></i></td>
+</tr>
+<tr>
 <td><b>Availability:</b></td><td> <i><%=prod.isAvailable()%></i></td>
 </tr>
 </table>
+<%if(prod.isAvailable()==true) {%>
+
 <form action="base" method="post">
-<input type="hidden" value="<%=prod.getId()%>" name="id" />
+<input type="hidden" onclick="myfunction()" value="<%=prod.getId()%>" name="id" />
 <input type="submit" value="Add to Cart">
 </form>
+<%} else{ %>
+<h2 style="color: red"> SOLD OUT</h2>
+<%} %>
 </div>
 </div>
  <br>

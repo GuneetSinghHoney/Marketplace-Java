@@ -12,6 +12,8 @@
 </head>
 <body style="background-image:images/bg.png"> 
 <center>
+
+<form action="checkout" method="post">
 <%
 ArrayList<Integer> arr;
 try{
@@ -51,7 +53,7 @@ catch(Exception e){
 </div>
 <div style="position: relative;float: right;margin-right: 400px;margin-top: 50px">
 Select Quantity:  
-  <select name="Quantity">
+  <select name=<%=prod.getId()%> >
   
   <%for(int x=1;x<=prod.getNumberInstock();x++){ %>
     <option><%=x%></option>
@@ -62,9 +64,11 @@ Select Quantity:
 </div>
 <hr>
 <%} %>
-<form action="checkout" method="post">
+
 <input type="submit" value="Pay Now">
+ 
 </form>
+
 </center>
 </body>
 </html>

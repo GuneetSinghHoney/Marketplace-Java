@@ -9,6 +9,8 @@ package DAO;
  */
 public class database
 {
+	static database obj = null;
+	
 	private ProductArrayDAO x;
 	private database()
 	{
@@ -30,7 +32,11 @@ public class database
 	
 	public static database getInstance()
 	{
-		return new database();
+		if(obj == null)
+		{
+			obj = new database();
+		}
+		return obj;
 	}
 
 }

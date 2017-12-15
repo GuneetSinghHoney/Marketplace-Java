@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import DAO.Product;
 import DAO.ProductArrayDAO;
 import DAO.database;
 
@@ -43,7 +44,33 @@ public class CheckoutServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getSession().setAttribute("cart", null);
+
+	 
+		ProductArrayDAO products = database.getInstance().getProducts();
+		ArrayList<Integer> arr = (ArrayList<Integer>)request.getSession().getAttribute("cart");
+
+		System.out.println(arr.size());
+		for(int i=0;i<arr.size();i++)
+		{
+			System.out.println("hello");
+			Product p= products.getProduct(arr.get(i));
+			int quantity = Integer.parseInt(request.getParameter(arr.get(i)+""));
+			quantity = p.getNumberInstock()-quantity;
+			System.out.println(quantity);
+			if(quantity==0)
+			{
+
+			p.setAvailable(false);
+					
+			}
+		 
+			p.setNumberInstock(quantity);
+			
+			 
+			request.getSession().setAttribute("cart", null);
+			response.sendRedirect("base");
+			
+		}
 	}
 
 }

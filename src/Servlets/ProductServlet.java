@@ -35,6 +35,7 @@ public class ProductServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		RequestDispatcher disp = request.getRequestDispatcher("products.jsp");
+		request.setAttribute("flag", "F");
 		obj = database.getInstance().getProducts();
 		
 		request.setAttribute("products", obj.getAll());
@@ -46,9 +47,12 @@ public class ProductServlet extends HttpServlet {
 	 */
 	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		System.out.println("post");
 		HttpSession session =  request.getSession();
 		ArrayList<Integer> arr;
+		
+		request.setAttribute("flag", "T");
+		
 		try {
 		arr = (ArrayList<Integer>)session.getAttribute("cart");
 		if(arr==null)
@@ -63,11 +67,16 @@ public class ProductServlet extends HttpServlet {
 			arr = new ArrayList<>();
 			session.setAttribute("cart", arr);
 		}
+		try {
 		int id = Integer.parseInt(request.getParameter("id"));
+		
 		System.out.println(id);
-		 if(!arr.contains(id)&&id!=4)
+		 if(!arr.contains(id))
 			 	arr.add(id);
-		 
+		}catch(Exception e)
+		{
+			
+		}
 		doGet(request, response);
 	}
 
